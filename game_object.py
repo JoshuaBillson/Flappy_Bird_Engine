@@ -13,6 +13,8 @@ Functions:
     GameObject.set_velocity()
     GameObject.bounce_horizontal()
     GameObject.bounce_vertical()
+    GameObject.get_position()
+    GameObject.get_velocity()
 """
 
 class GameObject:
@@ -64,8 +66,8 @@ class GameObject:
         Returns:
             bool: True if colliding, false otherwise.
         """
-        self_rect = self.image.get_rect()
-        other_rect = other.image.get_rect()
+        self_rect = self.image.get_rect(topleft=(self.pos))
+        other_rect = other.image.get_rect(topleft=(other.pos))
         return self_rect.colliderect(other_rect)
 
     def set_velocity(self, new_velocity):
@@ -95,3 +97,11 @@ class GameObject:
         Takes no arguments and returns nothing.
         """
         self.velocity[1] *= -1
+
+    def get_position(self):
+        """ Returns the object's position """
+        return self.pos
+
+    def get_velocity(self):
+        """ Returns the object's velocity """
+        return self.velocity
