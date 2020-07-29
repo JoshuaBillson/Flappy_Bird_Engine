@@ -22,7 +22,7 @@ Functions:
 import pygame
 from src.game_object import GameObject
 
-MAX_JUMP = -17
+MAX_JUMP = -10
 MAX_FALL = 15
 
 
@@ -41,9 +41,10 @@ class Bird(GameObject):
         jump_force: The upward acceleration imparted by jumping.
     """
     def __init__(self, window):
-        GameObject.__init__(self, pygame.image.load('assets/Bird.png'), [0, 0], window)
+        GameObject.__init__(self, pygame.image.load('../assets/Bird.png'), [0, 0], window)
         self.pos = [75, (self.window.get_height() // 2) - (self.image.get_height() // 2)]
-        self.jump_force = 14
+        self.jump_force = 20
+        self.velocity = [0, -10]
 
     def jump(self):
         """
@@ -65,9 +66,8 @@ class Bird(GameObject):
         Returns:
             None.
         """
-        self.velocity[1] += gravity
-        if self.velocity[1] >= MAX_FALL:
-            self.velocity[1] = gravity
+        if self.velocity[1] <= MAX_FALL:
+            self.velocity[1] += gravity
 
     def hit_edge(self, ground_height):
         """

@@ -1,4 +1,3 @@
-# from pygame.locals import *
 from random import randint
 from time import time
 import pygame
@@ -12,18 +11,6 @@ TITLE = 'Flappy Bird'
 FPS = 60
 GRAVITY = 1
 SCROLL_SPEED = 5
-
-"""
-def init():
-    pygame.init()
-    flappy_bird = FlappyBird(pygame.display.set_mode(WINDOW_SIZE))
-    pygame.display.set_caption(TITLE)
-
-
-def play_game():
-    pygame.quit()
-    sys.exit()
-"""
 
 
 class GameEngine:
@@ -68,10 +55,18 @@ class GameEngine:
         """
         timer = 0
         while timer < (FPS * 3):
-            self.draw_frame()
+            self.events()
+            self.window.fill(pygame.Color('black'))
+            self.background.draw()
+            self.ground.draw()
+            self.top_pipe.draw()
+            self.bottom_pipe.draw()
+
             font = pygame.font.SysFont('Verdana', 80, True)
-            surface = font.render(str(3 - (timer // FPS)), True, pygame.Color((255, 255, 255)))
+            surface = font.render(str(3 - (timer // FPS)), True, pygame.Color('white'))
             self.window.blit(surface, ((self.window.get_width() // 2) - (surface.get_width() // 2), 150))
+
+            self.bird.draw()
             pygame.display.update()
             self.clock.tick(self.fps)
             timer += 1
@@ -122,13 +117,14 @@ class GameEngine:
 
         Takes no arguments are returns nothing.
         """
-        self.window.fill(pygame.Color((0, 0, 0)))
+        self.window.fill(pygame.Color('black'))
         self.background.draw()
-        self.ground.draw()
         self.top_pipe.draw()
         self.bottom_pipe.draw()
+        self.ground.draw()
         self._draw_score()
         self.bird.draw()
+        pygame.display.update()
 
     def next_frame(self):
         """
@@ -139,10 +135,10 @@ class GameEngine:
         self.clock.tick(self.fps)
 
     def _initialize_pipes(self):
-        pipe_gap = 120
-        pipe_clearance = 20
-        center = randint(pipe_clearance + (pipe_gap // 2), self.ground_height[1] - pipe_clearance - (pipe_gap // 2))
-        top_pos = [WINDOW_SIZE[0], center - (pipe_gap // 2) - pygame.image.load('assets/pipe.png').get_height()]
+        pipe_gap = 160
+        pipe_clearance = 10
+        center = randint(pipe_clearance + (pipe_gap // 2), self.ground_height - pipe_clearance - (pipe_gap // 2))
+        top_pos = [WINDOW_SIZE[0], center - (pipe_gap // 2) - pygame.image.load('../assets/pipe.png').get_height()]
         bottom_pos = [WINDOW_SIZE[0], center + (pipe_gap // 2)]
         self.top_pipe = Pipe("top", top_pos, SCROLL_SPEED, self.window)
         self.bottom_pipe = Pipe("bottom", bottom_pos, SCROLL_SPEED, self.window)
@@ -150,5 +146,5 @@ class GameEngine:
     def _draw_score(self):
         offset = 10
         font = pygame.font.SysFont('Verdana', 30, True)
-        surface = font.render('Score: ' + str(self.score), True, pygame.Color((255, 255, 255)))
+        surface = font.render('Score: ' + str(int(self.score)), True, pygame.Color('white'))
         self.window.blit(surface, (offset, offset))

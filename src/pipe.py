@@ -33,7 +33,7 @@ class Pipe(GameObject):
     """
     def __init__(self, orientation, pos, scroll_speed, window):
         assert orientation in ("top", "bottom"), "Error: Invalid Orientation!"
-        GameObject.__init__(self, pygame.image.load('assets/pipe.png'), pos, window)
+        GameObject.__init__(self, pygame.image.load('../assets/pipe.png'), pos, window)
         self.velocity = [-scroll_speed, 0]
         if orientation == "top":
             self.image = pygame.transform.flip(self.image, False, True)
