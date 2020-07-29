@@ -7,8 +7,6 @@ from src.pipe import Pipe
 
 # Constants
 WINDOW_SIZE = (288, 512)
-TITLE = 'Flappy Bird'
-FPS = 60
 GRAVITY = 1
 SCROLL_SPEED = 5
 
@@ -54,7 +52,7 @@ class GameEngine:
         Takes no arguments and returns nothing.
         """
         timer = 0
-        while timer < (FPS * 3):
+        while timer < (self.fps * 3):
             self.events()
             self.window.fill(pygame.Color('black'))
             self.background.draw()
@@ -63,7 +61,7 @@ class GameEngine:
             self.bottom_pipe.draw()
 
             font = pygame.font.SysFont('Verdana', 80, True)
-            surface = font.render(str(3 - (timer // FPS)), True, pygame.Color('white'))
+            surface = font.render(str(3 - (timer // self.fps)), True, pygame.Color('white'))
             self.window.blit(surface, ((self.window.get_width() // 2) - (surface.get_width() // 2), 150))
 
             self.bird.draw()
