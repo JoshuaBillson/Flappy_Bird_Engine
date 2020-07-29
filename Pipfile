@@ -5,9 +5,12 @@ verify_ssl = true
 
 [dev-packages]
 pylint = "*"
+twine = "*"
+pipenv-setup = "*"
 
 [packages]
 pygame = "*"
+wheel = "*"
 
 [requires]
 python_version = "3.7"
