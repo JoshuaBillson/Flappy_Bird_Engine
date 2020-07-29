@@ -20,10 +20,11 @@ Functions:
 """
 
 import pygame
-from game_object import GameObject
+from src.game_object import GameObject
 
 MAX_JUMP = -17
 MAX_FALL = 15
+
 
 class Bird(GameObject):
     """
@@ -37,7 +38,7 @@ class Bird(GameObject):
 
     Attributes:
         pos: The present position of the object as a pair of cartesian coordinates.
-        velocity: The present velocity of the object as a 2-dimensional vector.
+        jump_force: The upward acceleration imparted by jumping.
     """
     def __init__(self, window):
         GameObject.__init__(self, pygame.image.load('assets/Bird.png'), [0, 0], window)
