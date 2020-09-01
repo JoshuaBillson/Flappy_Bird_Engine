@@ -4,18 +4,9 @@ objects inherit.
 
 Classes:
     GameObject
-
-Functions:
-    GameObject(image, pos, window)
-    GameObject.draw()
-    GameObject.move()
-    GameObject.is_colliding(other)
-    GameObject.set_velocity()
-    GameObject.bounce_horizontal()
-    GameObject.bounce_vertical()
-    GameObject.get_position()
-    GameObject.get_velocity()
 """
+
+import pygame
 
 
 class GameObject:
@@ -34,7 +25,7 @@ class GameObject:
         velocity: The present velocity of the object as a 2-dimensional vector.
     """
     def __init__(self, image, pos, window):
-        self.image = image
+        self.image = pygame.image.load(image)
         self.pos = pos
         self.window = window
         self.velocity = [0, 0]

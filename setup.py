@@ -6,15 +6,14 @@ with open("README.md", "r") as fh:
 setup(
     install_requires=["pygame==1.9.6", "wheel==0.34.2"],
     name="flappy_bird_engine",
-    version="0.0.1",
+    version="0.0.5",
     author="Joshua Billson",
     author_email="jmbillson@outlook.com",
     description="A game engine for Flappy Bird powered by Pygame.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/JoshuaBillson/Flappy_Bird_Engine.git",
-    package_dir={"": "flappy_bird"},
-    packages=find_packages("flappy_bird"),
+    packages=["flappy_bird", "src"],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

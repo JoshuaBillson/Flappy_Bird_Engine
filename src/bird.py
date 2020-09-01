@@ -3,20 +3,6 @@ This module defines the Bird class.
 
 Classes:
     Bird
-
-Functions:
-    Bird(window)
-    Bird.draw()
-    Bird.move()
-    Bird.is_colliding(other)
-    Bird.set_velocity()
-    Bird.bounce_horizontal()
-    Bird.bounce_vertical()
-    Bird.get_position()
-    Bird.get_velocity()
-    Bird.jump()
-    Bird.fall(gravity)
-    Bird.hit_edge(ground_height)
 """
 
 import pygame
@@ -37,11 +23,10 @@ class Bird(GameObject):
         window (pygame.Surface): The window on which to draw the bird.
 
     Attributes:
-        pos: The present position of the object as a pair of cartesian coordinates.
         jump_force: The upward acceleration imparted by jumping.
     """
-    def __init__(self, window):
-        GameObject.__init__(self, pygame.image.load('../assets/Bird.png'), [0, 0], window)
+    def __init__(self, image, window):
+        GameObject.__init__(self, image, [0, 0], window)
         self.pos = [75, (self.window.get_height() // 2) - (self.image.get_height() // 2)]
         self.jump_force = 20
         self.velocity = [0, -10]

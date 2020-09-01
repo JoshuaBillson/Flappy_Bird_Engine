@@ -24,16 +24,10 @@ class Pipe(GameObject):
         pos (list): A pair of cartesian coordinates indicating the pipe's position.
         scroll_speed (int): The speed at which the pipe scrolls across the screen.
         window (pygame.Surface): The window on which to draw the bird.
-
-    Attributes:
-        image: The image associated with the object.
-        pos: The present position of the object as a pair of cartesian coordinates.
-        window: The game window on which to draw the object.
-        velocity: The present velocity of the object as a 2-dimensional vector.
     """
-    def __init__(self, orientation, pos, scroll_speed, window):
+    def __init__(self, image, orientation, pos, scroll_speed, window):
         assert orientation in ("top", "bottom"), "Error: Invalid Orientation!"
-        GameObject.__init__(self, pygame.image.load('../assets/pipe.png'), pos, window)
+        GameObject.__init__(self, image, pos, window)
         self.velocity = [-scroll_speed, 0]
         if orientation == "top":
             self.image = pygame.transform.flip(self.image, False, True)

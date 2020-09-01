@@ -1,3 +1,11 @@
+"""
+This file defines the GameEngine class which serves to provide a framework for running and maintaining and game
+of Flappy Bird.
+
+Classes:
+    GameEngine
+"""
+
 from random import randint
 from time import time
 import pygame
@@ -26,21 +34,22 @@ class GameEngine:
         top_pipe: An object representing the top half of the pipe which the player must avoid.
         bottom_pipe: An object representing the bottom half of the pipe which the player must avoid.
         bird: The bird controlled by the player.
-        continue_game: Indicates whether or not the game should continue.
+        _continue_game: Indicates whether or not the game should continue.
         score: The player's score in seconds.
         epoch: The time at which the game began.
     """
-    def __init__(self, window, fps):
+    def __init__(self, window, fps, bird, pipe, background, ground):
         self.window = window
         self.fps = fps
         self.clock = pygame.time.Clock()
-        self.background = GameObject(pygame.image.load('../assets/bg.png'), [0, 0], window)
-        self.ground_height = WINDOW_SIZE[1] - pygame.image.load('../assets/Ground.png').get_height()
-        self.ground = GameObject(pygame.image.load('../assets/Ground.png'), [0, self.ground_height], window)
+        self.background = GameObject(background, [0, 0], window)
+        self.ground_height = WINDOW_SIZE[1] - pygame.image.load(ground).get_height()
+        self.ground = GameObject(ground, [0, self.ground_height], window)
+        self.pipe_image = pipe
         self.top_pipe = None
         self.bottom_pipe = None
-        self.bird = Bird(window)
-        self.continue_game = True
+        self.bird = Bird(bird, window)
+        self._continue_game = True
         self.score = 0
         self.epoch = 0
         self._initialize_pipes()
@@ -79,7 +88,7 @@ class GameEngine:
         events = pygame.event.get()
         for event in events:
             if event.type == pygame.QUIT:
-                self.continue_game = False
+                self._continue_game = False
             elif event.type == pygame.KEYDOWN:
                 keys = pygame.key.get_pressed()
                 if keys[pygame.K_SPACE]:
@@ -105,7 +114,7 @@ class GameEngine:
         if self.bird.is_colliding(self.top_pipe) or \
             self.bird.is_colliding(self.bottom_pipe) or \
                 self.bird.hit_edge(self.ground_height):
-            self.continue_game = False
+            self._continue_game = False
         else:
             self.score = time() - self.epoch
 
@@ -132,14 +141,17 @@ class GameEngine:
         """
         self.clock.tick(self.fps)
 
+    def continue_game(self):
+        return self._continue_game
+
     def _initialize_pipes(self):
         pipe_gap = 160
         pipe_clearance = 10
         center = randint(pipe_clearance + (pipe_gap // 2), self.ground_height - pipe_clearance - (pipe_gap // 2))
-        top_pos = [WINDOW_SIZE[0], center - (pipe_gap // 2) - pygame.image.load('../assets/pipe.png').get_height()]
+        top_pos = [WINDOW_SIZE[0], center - (pipe_gap // 2) - pygame.image.load(self.pipe_image).get_height()]
         bottom_pos = [WINDOW_SIZE[0], center + (pipe_gap // 2)]
-        self.top_pipe = Pipe("top", top_pos, SCROLL_SPEED, self.window)
-        self.bottom_pipe = Pipe("bottom", bottom_pos, SCROLL_SPEED, self.window)
+        self.top_pipe = Pipe(self.pipe_image, "top", top_pos, SCROLL_SPEED, self.window)
+        self.bottom_pipe = Pipe(self.pipe_image, "bottom", bottom_pos, SCROLL_SPEED, self.window)
        
     def _draw_score(self):
         offset = 10
