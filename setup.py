@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    install_requires=["pygame==1.9.6", "wheel==0.34.2"],
+    install_requires=["pygame==1.9.6", "wheel==0.38.1"],
     name="flappy_bird_engine",
     version="0.0.5",
     author="Joshua Billson",
